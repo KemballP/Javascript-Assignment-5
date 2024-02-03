@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    
+ </head>
+ <body>
+ <h1 id="myHeading"> To Do List: </h1>
+ <input type="text" class="addItemInput">
+ <button class="addItemButton"> Add Item </button>
+ <button class="clearButton"> Clear Items </button>
+ <button class="sortButton"> Sort Alphabetically</button>
+ <div class="listContainer">
+ <ul class="unorderedList">
+    <li>Go outside</li>
+    <li>Posture check</li>
+    <li>Talk to a person</li>
+    <li>Eat</li>
+ </ul>
+ <input type="text" class="removeItemInput">
+ <button class="removeItemButton"> Remove item </button>
+ </div>
+ <script>
+    const sortButton = document.querySelector("button.sortButton");
+    const addItemInput = document.querySelector(".addItemInput");
+    const addItemButton = document.querySelector("button.addItemButton");
+    const clearButton = document.querySelector("button.clearButton");
+    const removeItemInput = document.querySelector(".removeItemInput");
+    const removeItemButton = document.querySelector("button.removeItemButton");
+    
+
+    clearButton.addEventListener("click", () => {
+        let list = document.querySelector(".unorderedList");
+        let listItems = Array.from(list.children);
+        listItems.forEach(function (item) {
+            list.removeChild(item);
+        });
+    });
+
+    sortButton.addEventListener("click", () => {
+        let list = document.querySelector(".unorderedList")
+        let listItems = Array.from(list.children);
+        listItems.sort(function (a,b) {return a.textContent.localeCompare(b.textContent, undefined, { sensitivity: 'base' });
+        });
+        listItems.forEach(function (item) {
+            list.appendChild(item);
+        });
+    });
+
+    addItemButton.addEventListener("click", () => {
+        let list = document.querySelector(".unorderedList");
+        let li = document.createElement("li");
+        li.textContent = addItemInput.value;
+        let appendedItem = list.appendChild(li);
+        addItemInput.value = "";
+    });
+
+    removeItemButton.addEventListener("click", () => {
+        let list = document.querySelector(".unorderedList");
+        let listItems = Array.from(list.children);
+        let removeInput = removeItemInput.value;
+        let notInList = true;
+        listItems.forEach(function (item) {
+            if(item.innerHTML === removeInput){
+                list.removeChild(item);
+                notInList = false;
+            }
+        });
+        if (notInList === true){
+            alert(removeInput + " is not in the list. Try a capital letter.");
+            notInList = false;
+        }
+        removeInput.value = ""; 
+    });
+    </script>
+ </body>
+</html
